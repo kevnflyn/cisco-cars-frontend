@@ -5,7 +5,7 @@ const debugServer = debug('frontend:server')
 /**
  * Normalize a port into a number, string, or false.
  */
-module.exports.normalizePort = function (val) {
+module.exports.normalizePort = (val) => {
   const port = parseInt(val, 10)
 
   if (isNaN(port)) {
@@ -49,7 +49,7 @@ module.exports.normalizePort = function (val) {
 /**
  * Event listener for HTTP server 'listening' event.
  */
-module.exports.onListening = server => function () {
+module.exports.onListening = server => () => {
   const addr = server.address()
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port
   debugServer('Listening on ' + bind)
