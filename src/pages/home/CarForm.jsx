@@ -1,29 +1,24 @@
-import React from 'react'
-import { Form, Button } from 'antd'
-import { Search } from '@src/components/form/Search'
-import { SearchOutlined } from '@ant-design/icons'
+import React, { useState } from 'react'
+import { Form } from 'antd'
 import Flex from 'styled-flex-component'
+
+import { submitCarForm } from './submitCarForm'
+import { FormFieldApiType } from './FormFieldApiType'
+import { FormFieldCarsSearch } from './FormFieldCarsSearch'
+import { SearchButton } from './SearchButton'
 
 import styles from './CarForm.module.less'
 
-const CarForm = ({ onSubmitted, onValidationFailure }) => {
+export const CarForm = ({ setResults, setErrors }) => {
   const [form] = Form.useForm()
-
-  const submit = async () => {
-    await form.validateFields()
-    const values = form.getFieldsValue()
-    onSubmitted(values)
+  const submit = () => {
+    submitCarForm(form, setResults, setErrors)
   }
-
-  const validator = async (_rule, value) => {
-    if (value === null) {
-      onValidationFailure()
-      throw new Error('Number ID required')
-    }
-  }
-
   return (
     <Form
+      initialValues={{
+        apiType: 'restful'
+      }}
       className={styles.carForm}
       name='carform'
       form={form}
@@ -32,28 +27,13 @@ const CarForm = ({ onSubmitted, onValidationFailure }) => {
         wrapperCol: { span: 14 },
       }}
     >
-      <Flex>
-        <Button
-          className={styles.button}
-          onClick={submit}
-          type='link'
-        >
-          <SearchOutlined/>
-        </Button>
-        <Form.Item
-          name='carId'
-          rules={[{ validator }]}
-          className={styles.formField}
-        >
-          <Search
-            placeholder='Search for cars using number IDs e.g. 1'
-            size='large'
-            onPressEnter={submit}
-          />
-        </Form.Item>
+      <Flex className={styles.fieldsWrapper} alignCenter column full>
+        <FormFieldApiType/>
+        <Flex full>
+          <SearchButton onClick={submit}/>
+          <FormFieldCarsSearch onPressEnter={submit}/>
+        </Flex>
       </Flex>
     </Form>
   )
 }
-
-export default CarForm

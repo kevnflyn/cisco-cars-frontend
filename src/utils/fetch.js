@@ -1,8 +1,8 @@
 const errorMessage = async response => {
   const { statusText, status, url } = response
-  const { error } = await response.json()
+  const { errors } = await response.json()
   return {
-    error,
+    errors,
     statusText,
     status,
     url
@@ -38,6 +38,17 @@ const defaultOptions = {
 export const getRequest = async (url, options = defaultOptions) => (
   handleResponse(
     await fetch(url, { ...options, method: 'GET' }),
+    options.headers['Content-Type']
+  )
+)
+
+export const postRequest = async (url, payload, options = defaultOptions) => (
+  handleResponse(
+    await fetch(url, {
+      ...options,
+      method: 'POST',
+      body: JSON.stringify(payload)
+    }),
     options.headers['Content-Type']
   )
 )
