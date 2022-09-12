@@ -20,5 +20,5 @@ const server = http.createServer(expressApp)
  * Listen on provided port, on all network interfaces.
  */
 server.listen(port)
-server.on('error', onError)
+server.on('error', onError(port))
 server.on('listening', onListening(server))

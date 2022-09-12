@@ -24,7 +24,7 @@ module.exports.normalizePort = function (val) {
 /**
  * Event listener for HTTP server 'error' event.
  */
- module.exports.onError = function (error) {
+ module.exports.onError = port => error => {
   if (error.syscall !== 'listen') {
     throw error
   }
