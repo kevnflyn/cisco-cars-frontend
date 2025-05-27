@@ -10,7 +10,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --config ./build/webpack.config.prod.js"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.3.0",
+    "@ant-design/icons": "^4.8.3",
     "@elastic/elasticsearch": "^8.0.0",
     "@svgr/webpack": "^5.5.0",
     "antd": "^4.9.4",
